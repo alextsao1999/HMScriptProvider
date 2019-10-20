@@ -1,0 +1,46 @@
+<nav class="navbar nav-border navbar-inverse" role="navigation">
+    <div class="container nav-center" >
+        <!-- 导航头部 -->
+        <div class="navbar-header">
+            <!-- 移动设备上的导航切换按钮 -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <b class="caret"></b>
+            </button>
+            <!-- 品牌名称或logo -->
+            <a class="navbar-brand" href="/">Hypermind</a>
+        </div>
+        <!-- 导航项目 -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">全部</a></li>
+                <li class="dropdown">
+                    <a href="/" class="dropdown-toggle" data-toggle="dropdown">管理 <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/scripts/my">我的脚本</a></li>
+                        <li><a href="/scripts/post">新增脚本</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/scripts/manage">管理脚本</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="/" class="dropdown-toggle" data-toggle="dropdown"><span th:text="${user eq null ? '用户' : user.username}"></span> <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <th:block  th:if="${user eq null}">
+                            <li><a href="/user/login">登录</a></li>
+                            <li ><a href="/user/register">注册</a></li>
+                        </th:block>
+                        <th:block  th:if="${user ne null}">
+                            <li><a href="/user/info">个人信息</a></li>
+                            <li><a href="/user/collection">我的收藏</a></li>
+                            <li class="divider"></li>
+                            <li ><a href="/user/logout">注销</a></li>
+                        </th:block>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

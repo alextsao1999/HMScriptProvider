@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="|查看代码 - ${script.name}|">查看代码</title>
+    <div th:replace="common/header"></div>
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="/lib/vs/editor/editor.main.css">
+    <style>
+        .list-border {
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+            padding-top: 1px;
+        }
+    </style>
+
+</head>
+<body>
+<div th:replace="common/navbar"></div>
+
+<div class="container" style="margin-bottom: 10px">
+    <div class="dropdown">
+        <button class="btn" type="button" data-toggle="dropdown">菜单 <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="#" onclick="onSetScriptCurrent()">运行</a></li>
+            <li><a href="#" onclick="onScriptSave()">保存</a></li>
+        </ul>
+    </div>
+
+</div>
+<div id="container" class="container list-border" style="height:600px">
+
+</div>
+<script>var require = { paths: { 'vs': '/lib/vs' } };</script>
+<div th:replace="common/footer"></div>
+<script src="/lib/vs/loader.js"></script>
+<script src="/lib/vs/editor/editor.main.nls.js"></script>
+<script src="/lib/vs/editor/editor.main.js"></script>
+
+<script th:inline="javascript">
+
+    var editor = monaco.editor.create(document.getElementById('container'), {
+        value: [[${script.content}]],
+
+        language: 'javascript'
+    });
+
+    function onSetScriptCurrent() {
+        $.ajax({
+            url: "/api/set/current",
+            type: "post",
+            dataType: "text",
+            data: {"value" : [[${script.id}]]},
+            success: function (res) {
+                new $.zui.Messager(res === 'true' ? "操作成功" : "操作失败", {
+                    icon: 'bell',
+                    type: 'success'
+                }).show();
+            }
+        });
+    }
+    function onScriptSave() {
+        $.ajax({
+            url: "/api/save",
+            type: "post",
+            dataType: "text",
+            data: {"id" : [[${script.id}]], "content": editor.getValue()},
+            success: function (res) {
+                new $.zui.Messager(res === 'true' ? "操作成功" : "操作失败", {
+                    icon: 'bell',
+                    type: 'success'
+                }).show();
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

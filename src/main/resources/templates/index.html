@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hypermind Script Provider</title>
+    <title th:replace="common/header"></title>
+    <style>
+        .list-border {
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+            padding-top: 1px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="common/navbar"></div>
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li class="active">列表</li>
+    </ol>
+</div>
+
+<div class="container">
+    <div class="list-border">
+        <div class="list list-condensed">
+            <header>
+                <h3><i class="icon icon-chevron-sign-right"></i> Hypermind脚本</h3>
+            </header>
+            <div class="items items-hover" th:each="script : ${all}">
+                <div class="item">
+                    <div class="item-heading">
+                        <div class="pull-right "><a class="btn btn-sm btn-success" th:href="@{/view(id = ${script.id})}" target="_blank">源码</a></div>
+                    </div>
+                    <div class="item-content">
+                        <div class="text" th:text="${script.name}"></div>
+                    </div>
+                    <div class="item-footer">
+                        <a href="#" class="text-muted"><i class="icon-comments"></i> <span th:text="${script.comment}"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div th:replace="common/footer"></div>
+</body>
+</html>
